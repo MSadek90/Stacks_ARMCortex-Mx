@@ -26,7 +26,7 @@
 
        
 
-📌 And then we take 1kbyte from stack from the end and divide it into two equal sections:
+📌 In our ex we take 1kbyte from stack from the end and divide it into two equal sections:
 
 
 
@@ -35,4 +35,16 @@
 
 
 2️⃣ PSP section which is hold the address of (RAM_END + 512) and it will take 512 byte too.
+
+then by default when the program is running the value in (SP) is the same value in (MSP) we need to link (SP) with (PSP) to do it, 
+we must intialize (PSP) with any value once you do it you will can link it with (SP).
+
+**__asm volatile(".equ RAM_END, (0x20000000U + (128*1024)) "); // represents the preprocessor in assembly 
+
+then we link (PSP) with (SP) by Putting 0x02 in CONTROL REG 
+__asm volatile ("LDR R0, =#0x02");
+	__asm volatile ("MSR CONTROL, R0");
+
+ int func (multiply) >> proccessor is in thread mode and (PSP) Link with (SP),
+ once func of generate interrupt executes the processor will be in handelr mode (MSP) will link with (SP).
 
